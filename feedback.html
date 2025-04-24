@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Mobile Feedback</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .desktop-warning {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem;
+            text-align: center;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .desktop-warning.active {
+            display: flex;
+        }
+
+        .warning-content {
+            background: #1e293b;
+            padding: 2rem;
+            border-radius: 1rem;
+            max-width: 300px;
+            border: 1px solid #334155;
+        }
+
+        .desktop-warning h2 {
+            color: #ef4444;
+            margin-bottom: 1rem;
+        }
+
+        .desktop-warning p {
+            margin-bottom: 1.5rem;
+            color: #94a3b8;
+        }
+
+        .proceed-btn {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .contact-container {
+            padding: 1.5rem;
+            max-width: 100%;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .contact-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #10b981;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group input,
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 1rem;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 0.5rem;
+            color: #f8fafc;
+            font-size: 1rem;
+            appearance: none;
+        }
+
+        .input-group textarea {
+            height: 120px;
+            resize: none;
+        }
+
+        .submit-btn {
+            background: #10b981;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #059669;
+        }
+
+        .status-message {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1rem;
+            display: none;
+            text-align: center;
+        }
+
+        .status-message.success {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid #10b981;
+        }
+
+        .status-message.error {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid #ef4444;
+        }
+
+        .floating-home {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #10b981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .floating-home:hover {
+            transform: scale(1.1);
+            background: #059669;
+        }
+
+        .floating-home i {
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            body {
+                overflow: hidden;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="desktop-warning" id="desktopWarning">
+        <div class="warning-content">
+            <i class='bx bx-error-circle' style="font-size: 3rem; color: #ef4444; margin-bottom: 1rem"></i>
+            <h2>Mobile Only</h2>
+            <p>This feedback form is optimized for mobile devices.</p>
+            <button class="proceed-btn" onclick="dismissWarning()">Proceed Anyway</button>
+        </div>
+    </div>
+
+    <div class="contact-container">
+        <div class="contact-header">
+            <h1>Feedback Form</h1>
+            <p>Share your experience with us</p>
+        </div>
+        
+        <form class="contact-form" id="feedbackForm">
+            <div class="input-group">
+                <input type="text" placeholder="Your Name" name="from_name" required>
+            </div>
+            
+            <div class="input-group">
+                <input type="email" placeholder="Email Address" name="reply_to" required>
+            </div>
+            
+            <div class="input-group">
+                <select name="feedback_type" required>
+                    <option value="">Feedback Type</option>
+                    <option value="suggestion">Suggestion</option>
+                    <option value="bug">Bug Report</option>
+                    <option value="compliment">Compliment</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <textarea placeholder="Your Feedback..." name="message" required></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">
+                <i class='bx bx-check-circle'></i>
+                Submit Feedback
+            </button>
+            
+            <div class="status-message" id="status"></div>
+        </form>
+    </div>
+
+    <a href="index.html" class="floating-home">
+        <i class='bx bx-home'></i>
+    </a>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // Initialize EmailJS with your credentials
+        emailjs.init({
+            publicKey: "RXOH_Ybxr-cWWYESs",
+            blockHeadless: true,
+            limitRate: {
+                id: 'feedback',
+                throttle: 10000
+            }
+        });
+
+        // Desktop Detection
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        function showDesktopWarning() {
+            if (!isMobile() && !localStorage.getItem('desktopWarningDismissed')) {
+                document.getElementById('desktopWarning').classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function dismissWarning() {
+            document.getElementById('desktopWarning').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            localStorage.setItem('desktopWarningDismissed', 'true');
+        }
+
+        // Initial check
+        showDesktopWarning();
+
+        // Form Handling
+        const feedbackForm = document.getElementById('feedbackForm');
+        const statusMessage = document.getElementById('status');
+
+        feedbackForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if (!feedbackForm.checkValidity()) {
+                feedbackForm.reportValidity();
+                return;
+            }
+
+            statusMessage.style.display = 'block';
+            statusMessage.className = 'status-message';
+            statusMessage.textContent = 'Submitting...';
+
+            emailjs.sendForm('service_t6ew6t9', 'template_0gniwh6', feedbackForm)
+                .then(() => {
+                    statusMessage.className = 'status-message success';
+                    statusMessage.textContent = 'Feedback submitted successfully!';
+                    feedbackForm.reset();
+                    setTimeout(() => {
+                        statusMessage.style.display = 'none';
+                    }, 3000);
+                })
+                .catch((error) => {
+                    statusMessage.className = 'status-message error';
+                    statusMessage.textContent = 'Submission failed. Please try again.';
+                    console.error('EmailJS Error:', error);
+                });
+        });
+    </script>
+</body>
+</html>
