@@ -47,7 +47,7 @@ goTop.addEventListener('click', () =>
 document.querySelector('.down-arrow').addEventListener('click', () =>
   document.getElementById('about').scrollIntoView({ behavior: 'smooth' })
 );
-const words = [" The Researcher ", " The Developer ", " The Creator ",  " The Engineer  "];
+const words = ["  Researcher ", "  Developer ", "  Creator ",  "  Engineer  "];
   let wordIndex = 0;
   let charIndex = 0;
   let isDeleting = false;
