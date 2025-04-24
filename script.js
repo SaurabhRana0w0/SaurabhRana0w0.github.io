@@ -48,36 +48,36 @@ document.querySelector('.down-arrow').addEventListener('click', () =>
   document.getElementById('about').scrollIntoView({ behavior: 'smooth' })
 );
 const words = [" The Researcher ", " The Developer ", " The Creator ",  " The Engineer  "];
-let wordIndex = 0;
-let charIndex = 0;
-let currentText = "";
-let isDeleting = false;
-const typingSpeed = 100;
-const deletingSpeed = 50;
-const delayBetweenWords = 1500;
+  let wordIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+  let currentText = "";
+  const typingSpeed = 100;
+  const deletingSpeed = 50;
+  const delayBetweenWords = 1500;
 
-function typeEffect() {
-  const typedText = document.getElementById("typed-text");
-  const fullWord = words[wordIndex];
+  function typeEffect() {
+    const typedText = document.getElementById("typed-text");
+    const fullWord = words[wordIndex];
 
-  if (isDeleting) {
-    currentText = fullWord.substring(0, charIndex--);
-  } else {
-    currentText = fullWord.substring(0, charIndex++);
+    if (isDeleting) {
+      currentText = fullWord.substring(0, charIndex--);
+    } else {
+      currentText = fullWord.substring(0, charIndex++);
+    }
+
+    typedText.textContent = currentText;
+
+    if (!isDeleting && charIndex === fullWord.length + 1) {
+      isDeleting = true;
+      setTimeout(typeEffect, delayBetweenWords);
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      wordIndex = (wordIndex + 1) % words.length;
+      setTimeout(typeEffect, 500);
+    } else {
+      setTimeout(typeEffect, isDeleting ? deletingSpeed : typingSpeed);
+    }
   }
 
-  typedText.textContent = currentText;
-
-  if (!isDeleting && charIndex === fullWord.length) {
-    isDeleting = true;
-    setTimeout(typeEffect, delayBetweenWords);
-  } else if (isDeleting && charIndex === 0) {
-    isDeleting = false;
-    wordIndex = (wordIndex + 1) % words.length;
-    setTimeout(typeEffect, 500);
-  } else {
-    setTimeout(typeEffect, isDeleting ? deletingSpeed : typingSpeed);
-  }
-}
-
-window.onload = typeEffect;
+  document.addEventListener("DOMContentLoaded", typeEffect);
