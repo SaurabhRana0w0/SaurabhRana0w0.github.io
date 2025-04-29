@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VenzRT - The Best AI Bro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a2e, #1a1a4a);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .developer-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 25px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .developer-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ffff, #0066ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .coming-soon {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .status-container {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .status-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .status-card:hover {
+            transform: translateY(-5px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .background-glow {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0, 102, 255, 0.2), transparent);
+            filter: blur(100px);
+            animation: move 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes move {
+            0% { transform: translate(0, 0); }
+            25% { transform: translate(200px, 200px); }
+            50% { transform: translate(-100px, 300px); }
+            75% { transform: translate(-200px, -100px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        footer {
+            position: absolute;
+            padding-left: 60px;
+            bottom: 20px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <button class="developer-btn" onclick="window.open('https://saurabhrana0w0.github.io', '_blank')">Visit Developer</button>
+    
+    <div class="background-glow"></div>
+    
+    <div class="container">
+        <h1 class="logo">VenzRT</h1>
+        <p class="tagline">The Best AI Bro</p>
+        <h2 class="coming-soon">Coming Soon!</h2>
+        
+        <div class="status-container">
+            <div class="status-card">
+                <h3>Launching in</h3>
+                <p id="countdown">60 days</p>
+            </div>
+            <div class="status-card">
+                <h3>Current Version</h3>
+                <p>1.0.0</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 VenzRT. 
+        All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Simulated countdown
+        let days = 60;
+        setInterval(() => {
+            days = days > 0 ? days - 1 : 60;
+            document.getElementById('countdown').textContent = `${days} days`;
+        }, 86400000); // Update daily
+
+        // Add hover effect to all status cards
+        document.querySelectorAll('.status-card').forEach(card => {
+            card.addEventListener('mouseover', () => {
+                card.style.transform = 'translateY(-5px)';
+            });
+            card.addEventListener('mouseout', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
